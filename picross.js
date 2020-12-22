@@ -291,7 +291,7 @@ xxxxx.x.xxxxx
 ....xxxxx....
 `)
 
-grid.reveal()
+// grid.reveal()
 
 const $ = (sel) => document.querySelector(sel)
 const on = (el,type,cb) => el.addEventListener(type,cb)
