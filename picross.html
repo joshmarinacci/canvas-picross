@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        html, body {
+            background-color: black;
+            color: black;
+            font-family: sans-serif;
+            font-size: 12pt;
+            padding:0;
+            margin:0;
+            --green:#94ee09;
+            --red: #f31717;
+            --black: #1a1919;
+        }
+        canvas {
+            border: 0px solid red;
+            margin: 0px;
+            padding:0px;
+            flex: 1.0;
+        }
+        .wrapper {
+            border: 0px solid red;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 99vw;
+            height: 99vh;
+        }
+        .message-scrim {
+            background-color: hsla(0,0%,90%,0.5);
+            border: 0px solid green;
+            position: absolute;
+            padding: 1em;
+            left:0;
+            right:0;
+            top:0;
+            bottom:0;
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            justify-items: center;
+            align-items: center;
+        }
+        .message-text {
+            border: 0.5em solid var(--green);
+            position: absolute;
+            font-size: 4em;
+            background-color: hsla(0,0%,100%,0.7);
+            color: var(--red);
+            padding: 2em;
+            text-align: center;
+            line-height: 200%;
+            border-radius: 1em;
+            text-shadow: 3px 3px var(--black),
+            6px 6px var(--green);
+        }
+        .hide {
+            display: none;
+        }
+        .title {
+            background-color: white;
+            text-align: center;
+            font: bold 5em sans-serif;
+            padding: 1em;
+        }
+        .title span {
+
+            color: var(--green);
+            position: relative;
+            animation: scatter 0.9s infinite;
+            animation-delay: 0s;
+            animation-timing-function: ease-in-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+            text-shadow: 3px 3px var(--black),
+                         6px 6px var(--red);
+        }
+        .title span:nth-child(2n) {
+            color: var(--red);
+            text-shadow: 3px 3px var(--black),
+                         6px 6px var(--green);
+        }
+        .title span:nth-child(8n+1) {  animation-delay: 0.1s;     }
+        .title span:nth-child(8n+2) {  animation-delay: 0.2s;     }
+        .title span:nth-child(8n+3) {  animation-delay: 0.3s;     }
+        .title span:nth-child(8n+4) {  animation-delay: 0.4s;     }
+        .title span:nth-child(8n+5) {  animation-delay: 0.5s;     }
+        .title span:nth-child(8n+6) {  animation-delay: 0.6s;     }
+        .title span:nth-child(8n+7) {  animation-delay: 0.7s;     }
+
+        @keyframes scatter {
+            0% {
+                top: 0;
+            }
+            50% {
+                top: -30px;
+            }
+            100% {
+                top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="title" id="title"></div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div class="message-scrim hide">
+        <div class="message-text">the<br/> message</div>
+    </div>
+</div>
+
+<script src="picross.js" type="module"></script>
+</body>
+
+</html>
