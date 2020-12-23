@@ -112,7 +112,13 @@ class View {
         this.canvas = canvas
         this.canvas.addEventListener('click',(e)=>this.handle_click(e))
         this.grid = grid
+        this.xoff = 100
+        this.yoff = 100
         this.reinit()
+    }
+    drawBackground(ctx) {
+        ctx.fillStyle = COLORS.BGCOLOR
+        ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
     }
     drawGridlines(ctx) {
         let sc = this.calcScale()
@@ -195,9 +201,13 @@ class View {
     redraw() {
         this.resize()
         let ctx = $("#canvas").getContext('2d')
+        ctx.save()
+        this.drawBackground(ctx)
+        ctx.translate(this.xoff,this.yoff)
         this.drawGridlines(ctx) //done
         this.drawGameboard(ctx) // done
         this.drawClues(ctx)
+        ctx.restore()
     }
 
     handle_click(e) {
@@ -217,8 +227,8 @@ class View {
     canvasToGrid(e) {
         let rect = e.target.getBoundingClientRect()
         let pt = {
-            x:Math.floor((e.clientX-rect.x)/this.calcScale()),
-            y:Math.floor((e.clientY-rect.y)/this.calcScale()),
+            x:Math.floor((e.clientX-rect.x - this.xoff)/this.calcScale()),
+            y:Math.floor((e.clientY-rect.y - this.yoff)/this.calcScale()),
         }
         let hclues = this.calcHClues()
         let vclues = this.calcVClues()
@@ -255,9 +265,17 @@ class View {
 
     resize() {
         let canvas = $("#canvas")
-        console.log('sizing',canvas.clientWidth, canvas.clientHeight)
+        // console.log('sizing',canvas.clientWidth, canvas.clientHeight)
         canvas.width = canvas.clientWidth-1
         canvas.height = canvas.clientHeight-1
+        let w = this.vmax + this.grid.getWidth()
+        // let wsc = this.canvas.width/w
+        let h = this.hmax + this.grid.getHeight()
+        // let hsc = this.canvas.height/h
+        let sc = this.calcScale()
+        // console.log(w*sc,h*sc)
+        this.xoff = (canvas.width - w*sc)/2
+        this.yoff = (canvas.height - h*sc)/2
     }
     calcScale() {
         let w = this.vmax + this.grid.getWidth()
@@ -300,7 +318,7 @@ let view = new View(canvas,grid)
 view.redraw()
 
 on($(".message-text"),'click',()=>{
-     grid.reset()
+    grid.reset()
     view.redraw()
     $(".message-scrim").classList.add('hide')
 })
