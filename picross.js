@@ -255,6 +255,7 @@ class View {
 
     resize() {
         let canvas = $("#canvas")
+        console.log('sizing',canvas.clientWidth, canvas.clientHeight)
         canvas.width = canvas.clientWidth-1
         canvas.height = canvas.clientHeight-1
     }
@@ -311,3 +312,4 @@ on(window,'resize',()=>{
 let title = Array.from('Jesse Christmas Picross')
 title = title.map(l => '<span>'+l+'</span>').join("")
 $("#title").innerHTML = title
+setTimeout(()=>view.redraw(),500)
