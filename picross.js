@@ -277,18 +277,16 @@ class View {
 
 let grid = new Grid()
 grid.load(`
-..x.......x..
-..xx.....xx..
-..xxx...xxx..
-.xxxxxxxxxxx.
-xxxxxxxxxxxxx
-xxxx.xxx.xxxx
-xxxxxxxxxxxxx
-xxxxxx.xxxxxx
-xxxxx.x.xxxxx
-.xxxxxxxxxxx.
-..xxxxxxxxx..
-....xxxxx....
+.x.....x..
+.xx...xx..
+.xxxxxxx..
+xxxxxxxxx.
+xxx.x.xxx.
+xxxxxxxxx.
+xxxx.xxxx.
+xxx.x.xxx.
+.xxxxxxx..
+..xxxxx...
 `)
 
 // grid.reveal()
