@@ -96,8 +96,7 @@ class Grid {
 const COLORS = {
     BGCOLOR:'hsl(0,0%,99%)',
     GRIDCOLOR:'#1a1919',
-    // FILLEDCOLOR:'#f31717',
-    FILLEDCOLOR:'#1a1919',
+    FILLEDCOLOR:'#f31717',
     EMPTYCOLOR:'#94ee09',
     UNKNOWNCOLOR:'hsl(0,0%,99%)'
 }
@@ -153,6 +152,10 @@ class View {
     }
     drawGameboard(ctx) {
         let sc = this.calcScale()
+
+        ctx.fillStyle = COLORS.GRIDCOLOR
+        ctx.fillRect(0,0,this.vmax*sc,this.hmax*sc)
+
         for(let i=0; i<grid.getWidth();i++) {
             for(let j=0; j<grid.getHeight(); j++) {
                 let mk = grid.getMark(i,j)
@@ -162,6 +165,19 @@ class View {
                 let x = ((i+this.vmax)*sc)+1
                 let y = ((j+this.hmax)*sc)+1
                 ctx.fillRect(x,y,sc-2,sc-2)
+                if(mk === MARKS.EMPTY) {
+                    ctx.save()
+                    ctx.translate(x,y)
+                    ctx.strokeStyle = COLORS.GRIDCOLOR
+                    ctx.lineWidth = 5
+                    ctx.beginPath()
+                    ctx.moveTo(sc*0.1,sc*0.1)
+                    ctx.lineTo(sc*0.9,sc*0.9)
+                    ctx.moveTo(sc*0.1,sc*0.9)
+                    ctx.lineTo(sc*0.9,sc*0.1)
+                    ctx.stroke()
+                    ctx.restore()
+                }
             }
         }
     }
@@ -283,15 +299,11 @@ class View {
 
     resize() {
         let canvas = $("#canvas")
-        // console.log('sizing',canvas.clientWidth, canvas.clientHeight)
         canvas.width = canvas.clientWidth-1
         canvas.height = canvas.clientHeight-1
         let w = this.vmax + this.grid.getWidth()
-        // let wsc = this.canvas.width/w
         let h = this.hmax + this.grid.getHeight()
-        // let hsc = this.canvas.height/h
         let sc = this.calcScale()
-        // console.log(w*sc,h*sc)
         this.xoff = (canvas.width - w*sc)/2
         this.yoff = (canvas.height - h*sc)/2
     }
@@ -302,7 +314,6 @@ class View {
         let hsc = this.canvas.height/h
         return Math.min(wsc,hsc)
     }
-
     reinit() {
         this.hclues = this.calcHClues()
         this.vclues = this.calcVClues()
