@@ -142,11 +142,11 @@ class View {
         ctx.lineWidth = 5.0
         ctx.beginPath()
         for(let i=0; i<3; i++) {
-            ctx.moveTo(i*sc*5 + sc*3,0)
-            ctx.lineTo(i*sc*5 + sc*3,gh*sc)
+            ctx.moveTo(i*sc*5 + sc*this.vmax,0)
+            ctx.lineTo(i*sc*5 + sc*this.vmax,gh*sc)
 
-            ctx.moveTo(0,i*sc*5 + sc*3)
-            ctx.lineTo(gw*sc,i*sc*5 + sc*3)
+            ctx.moveTo(0,i*sc*5 + sc*this.hmax)
+            ctx.lineTo(gw*sc,i*sc*5 + sc*this.hmax)
         }
         ctx.stroke()
         ctx.restore()
@@ -259,8 +259,11 @@ class View {
         ctx.save()
         ctx.translate(this.vmax*sc,0)
         this.hclues.forEach((col,i)=>{
+            let adj = this.hmax-col.length
             col.forEach((clue,j )=>{
-                ctx.fillText(""+clue,i*sc+sc*0.35,j*sc+sc*0.7)
+                ctx.fillText(""+clue,
+                    i*sc+sc*0.35,
+                    (j+adj)*sc+sc*0.7)
             })
         })
         ctx.restore()
@@ -268,8 +271,11 @@ class View {
         ctx.save()
         ctx.translate(0,this.hmax*sc)
         this.vclues.forEach((row,j)=>{
+            let adj = this.vmax-row.length
             row.forEach((clue,i )=>{
-                ctx.fillText(""+clue,i*sc+sc*0.35,j*sc+sc*0.7)
+                ctx.fillText(""+clue,
+                    (i+adj)*sc +sc*0.35,
+                    j*sc+sc*0.7)
             })
         })
         ctx.restore()
