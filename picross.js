@@ -94,11 +94,12 @@ class Grid {
 }
 
 const COLORS = {
-    BGCOLOR:'white',
+    BGCOLOR:'hsl(0,0%,99%)',
     GRIDCOLOR:'#1a1919',
-    FILLEDCOLOR:'#f31717',
+    // FILLEDCOLOR:'#f31717',
+    FILLEDCOLOR:'#1a1919',
     EMPTYCOLOR:'#94ee09',
-    UNKNOWNCOLOR:'hsl(0,0%,80%)'
+    UNKNOWNCOLOR:'hsl(0,0%,99%)'
 }
 
 const MARKS = {
@@ -119,11 +120,10 @@ class View {
     drawBackground(ctx) {
         ctx.fillStyle = COLORS.BGCOLOR
         ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
+
     }
     drawGridlines(ctx) {
         let sc = this.calcScale()
-        ctx.fillStyle = COLORS.BGCOLOR
-        ctx.fillRect(0,0,this.canvas.width,this.canvas.height)
         ctx.lineWidth = 1.5
         ctx.strokeStyle = COLORS.GRIDCOLOR
         ctx.beginPath()
@@ -138,6 +138,18 @@ class View {
             ctx.lineTo(gw*sc,i*sc)
         }
         ctx.stroke()
+        ctx.save()
+        ctx.lineWidth = 5.0
+        ctx.beginPath()
+        for(let i=0; i<3; i++) {
+            ctx.moveTo(i*sc*5 + sc*3,0)
+            ctx.lineTo(i*sc*5 + sc*3,gh*sc)
+
+            ctx.moveTo(0,i*sc*5 + sc*3)
+            ctx.lineTo(gw*sc,i*sc*5 + sc*3)
+        }
+        ctx.stroke()
+        ctx.restore()
     }
     drawGameboard(ctx) {
         let sc = this.calcScale()
@@ -204,8 +216,8 @@ class View {
         ctx.save()
         this.drawBackground(ctx)
         ctx.translate(this.xoff,this.yoff)
-        this.drawGridlines(ctx) //done
         this.drawGameboard(ctx) // done
+        this.drawGridlines(ctx) //done
         this.drawClues(ctx)
         ctx.restore()
     }
@@ -308,7 +320,7 @@ xxx.x.xxx.
 ..xxxxx...
 `)
 
-// grid.reveal()
+grid.reveal()
 
 const $ = (sel) => document.querySelector(sel)
 const on = (el,type,cb) => el.addEventListener(type,cb)
