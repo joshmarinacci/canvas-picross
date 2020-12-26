@@ -295,6 +295,7 @@ class View {
 
 
 let grid = new Grid()
+/*
 grid.load(`
 .x.....x..
 .xx...xx..
@@ -306,9 +307,20 @@ xxxx.xxxx.
 xxx.x.xxx.
 .xxxxxxx..
 ..xxxxx...
+`)*/
+grid.load(`
+.x.x.x.x
+x.x.x.x.
+.x.x.x.x
+x.x.x.x.
+.x.x.x.x
+x.x.x.x.
+.x.x.x.x
+x.x.x.x.
+
 `)
 
-// grid.reveal()
+//grid.reveal()
 
 const $ = (sel) => document.querySelector(sel)
 const on = (el,type,cb) => el.addEventListener(type,cb)
